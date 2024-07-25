@@ -20,4 +20,4 @@
 
 #ifndef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE 200809L
-#endif /* !POSIX_C_SOURCE */
+#endif /* !_POSIX_C_SOURCE */
