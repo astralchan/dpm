@@ -33,17 +33,33 @@ include config.mk
 all: src/dpm src/dpm-pkg
 
 src/dpm: \
-	  src/dpm.o
+	  src/dpm.o \
+	  src/dpm-emerge.o \
+	  src/dpm-remove.o \
+	  src/dpm-update.o \
+	  src/io-utils.o
 	$(CC) $(CFLAGS) -o $@ \
 	  src/dpm.o \
+	  src/dpm-emerge.o \
+	  src/dpm-remove.o \
+	  src/dpm-update.o \
+	  src/io-utils.o \
 	  $(LDFLAGS)
 src/dpm.o: src/dpm.c
+src/dpm-emerge.o: src/dpm-emerge.c
+src/dpm-remove.o: src/dpm-remove.c
+src/dpm-update.o: src/dpm-update.c
+src/io-utils.o: src/io-utils.c
 
 src/dpm-pkg: src/dpm-pkg.sh
 
 clean:
 	@rm -f src/dpm
 	@rm -f src/dpm.o
+	@rm -f src/dpm-emerge.o
+	@rm -f src/dpm-remove.o
+	@rm -f src/dpm-update.o
+	@rm -f src/io-utils.o
 	@rm -f src/dpm-pkg
 
 	@rm -f dpm-*.tar*
@@ -65,11 +81,23 @@ install:
 	@cp doc/dpm-pkg.1 $(MANDIR)/man1
 	@chmod 644 $(MANDIR)/man1/dpm-pkg.1
 
+	@cp doc/dpm-emerge.1 $(MANDIR)/man1
+	@chmod 644 $(MANDIR)/man1/dpm-emerge.1
+
+	@cp doc/dpm-remove.1 $(MANDIR)/man1
+	@chmod 644 $(MANDIR)/man1/dpm-remove.1
+
+	@cp doc/dpm-update.1 $(MANDIR)/man1
+	@chmod 644 $(MANDIR)/man1/dpm-update.1
+
 uninstall:
 	@rm -f $(BINDIR)/dpm
 	@rm -f $(BINDIR)/dpm-pkg
 	@rm -f $(MANDIR)/man1/dpm.1
 	@rm -f $(MANDIR)/man1/dpm-pkg.1
+	@rm -f $(MANDIR)/man1/dpm-emerge.1
+	@rm -f $(MANDIR)/man1/dpm-remove.1
+	@rm -f $(MANDIR)/man1/dpm-update.1
 
 dist:
 	git archive -o dpm-$(VERSION).tar HEAD

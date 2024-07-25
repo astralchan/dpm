@@ -19,38 +19,12 @@
  */
 
 #include "posix-config.h"
+#include "dpm-emerge.h"
 
 #include <stdlib.h>
-#include <string.h>
-
-#include "dpm-emerge.h"
-#include "dpm-remove.h"
-#include "dpm-update.h"
-#include "io-utils.h"
 
 int
-main(int argc, char *argv[])
+dpm_update(int argc, char *argv[])
 {
-	int ret = EXIT_SUCCESS;
-
-	if (argc < 2) {
-		fmsgf(RED, stderr, "Usage: %s <command> [option]... "
-		  "[package]...\n", argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	++argv, --argc;
-
-	if (!strcmp(argv[0], "emerge") || !strcmp(argv[0], "em")) {
-		ret = dpm_emerge(argc, argv);
-	} else if (!strcmp(argv[0], "remove") || !strcmp(argv[0], "rm")) {
-		ret = dpm_remove(argc, argv);
-	} else if (!strcmp(argv[0], "update") || !strcmp(argv[0], "up")) {
-		ret = dpm_update(argc, argv);
-	} else {
-		fmsgf(RED, stderr, "Unknown command: %s\n", argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	return ret;
+	return EXIT_SUCCESS;
 }

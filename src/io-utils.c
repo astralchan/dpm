@@ -19,38 +19,36 @@
  */
 
 #include "posix-config.h"
-
-#include <stdlib.h>
-#include <string.h>
-
-#include "dpm-emerge.h"
-#include "dpm-remove.h"
-#include "dpm-update.h"
 #include "io-utils.h"
 
-int
-main(int argc, char *argv[])
+#include <stdarg.h>
+#include <stdio.h>
+
+void
+vfmsgf(enum color col, FILE *stream, const char *fmt, va_list ap)
 {
-	int ret = EXIT_SUCCESS;
+	(void)fprintf(stream, "\033[1m=>\033[%dmdpm\033[0;1m:\033[0m ", col);
+	(void)vfprintf(stream, fmt, ap);
+}
 
-	if (argc < 2) {
-		fmsgf(RED, stderr, "Usage: %s <command> [option]... "
-		  "[package]...\n", argv[0]);
-		return EXIT_FAILURE;
-	}
+void
+fmsgf(enum color col, FILE *stream, const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
 
-	++argv, --argc;
+	vfmsgf(col, stream, fmt, args);
 
-	if (!strcmp(argv[0], "emerge") || !strcmp(argv[0], "em")) {
-		ret = dpm_emerge(argc, argv);
-	} else if (!strcmp(argv[0], "remove") || !strcmp(argv[0], "rm")) {
-		ret = dpm_remove(argc, argv);
-	} else if (!strcmp(argv[0], "update") || !strcmp(argv[0], "up")) {
-		ret = dpm_update(argc, argv);
-	} else {
-		fmsgf(RED, stderr, "Unknown command: %s\n", argv[0]);
-		return EXIT_FAILURE;
-	}
+	va_end(args);
+}
 
-	return ret;
+void
+msgf(enum color col, const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+
+	vfmsgf(col, stdout, fmt, args);
+
+	va_end(args);
 }
