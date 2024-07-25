@@ -1,5 +1,15 @@
 # dpm
 
+# Build and Install
+
+To build dpm, run:
+
+    $ make
+
+To install dpm, run:
+
+    # make install
+
 # License
 
 SPDX-License-Identifier: GPL-3.0-or-later
