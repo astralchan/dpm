@@ -83,12 +83,15 @@ install:
 
 	@cp doc/dpm-emerge.1 $(MANDIR)/man1
 	@chmod 644 $(MANDIR)/man1/dpm-emerge.1
+	@ln $(MANDIR)/man1/dpm-emerge.1 $(MANDIR)/man1/dpm-em.1
 
 	@cp doc/dpm-remove.1 $(MANDIR)/man1
 	@chmod 644 $(MANDIR)/man1/dpm-remove.1
+	@ln $(MANDIR)/man1/dpm-remove.1 $(MANDIR)/man1/dpm-rm.1
 
 	@cp doc/dpm-update.1 $(MANDIR)/man1
 	@chmod 644 $(MANDIR)/man1/dpm-update.1
+	@ln $(MANDIR)/man1/dpm-update.1 $(MANDIR)/man1/dpm-up.1
 
 uninstall:
 	@rm -f $(BINDIR)/dpm
